@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Form demo</title>
+    </head>
+    <body>
+        <h1>Form demo</h1>
+        <form enctype="multipart/form-data" data-errors-message="Il y a {n} erreur{s} dans ce formulaire." data-errors-prefix="Error - " class="validate-form">
+            <div class="fields">
+                <div class="fields-inner">
+                    <div class="field name">
+                        <label for="prenom">Name
+                            <span class="required">(required)</span>
+                        </label>
+                        <input type="text" id="prenom" value="" data-validate="!empty" data-message-empty="The name is required.">
+                    </div>
+                    <div class="field email">
+                        <label for="courriel">Courriel
+                            <span class="required">(required)</span>
+                        </label>
+                        <input type="text" id="courriel" value="" data-validate="!empty email" data-message-empty="The email is required." data-message-email="The email has to be valid.">
+                    </div>
+                    <div class="field postal-code">
+                        <label for="postalCode">Postal code
+                            <span class="required">(required)</span>
+                        </label>
+                        <input type="text" id="postalCode" value="" data-validate="!empty caPostalCode" data-message-capostalcode="The postal code has to be valid." data-message-empty="The postal code is required.">
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+        <script type="text/javascript" src="../bower_components/is_js/is.js"></script>
+        <script type="text/javascript" src="../dist/jquery.form.js"></script>
+        <script>
+        $('.validate-form').form();
+        </script>
+    </body>
+</html>
