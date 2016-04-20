@@ -5,21 +5,21 @@
     var Form = function(element, options) {
         this.form = $(element);
 
-        this.config = $.extend({
+        // Default module configuration
+        this.defaults = {
             modifiers: {
                 '!': 'not'
-            },
-            customGlobalClasses: {}
-        }, options || {});
+            }
+        };
 
-        this.classes = $.extend({
-            active: 'is-active',
-            open: 'is-open',
-            hover: 'is-hover',
-            clicked: 'is-clicked',
-            extern: 'is-external',
-            error: 'is-error'
-        }, (window.classes !== undefined ? window.classes : this.config.customGlobalClasses) || {});
+        // Merge default classes with window.project.classes
+        this.classes = $.extend(true, this.defaults.classes, (window.project ? window.project.classes : {}));
+
+        // Merge default labels with window.project.labels
+        this.labels = $.extend(true, this.defaults.labels, (window.project ? window.project.labels : {}));
+
+        // Merge default config with custom config
+        this.config = $.extend(true, this.defaults, options || {});
 
         this.errors = [];
         this.init();
