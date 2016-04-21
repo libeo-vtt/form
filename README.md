@@ -1,4 +1,4 @@
-# VTT jQuery Form Plugin
+# jQuery Form Validation Plugin
 A form validation plugin using is.js
 
 ## Usage
@@ -20,7 +20,7 @@ A form validation plugin using is.js
 3. Call the plugin:
 
 	```javascript
-	$("#element").form({
+	$('form').form({
 		// config
 	});
 	```
