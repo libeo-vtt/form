@@ -22,6 +22,12 @@
                         </label>
                         <input type="text" id="courriel" value="" data-validate="!empty email" data-message-empty="The email is required." data-message-email="The email has to be valid.">
                     </div>
+                    <div class="field email">
+                        <label for="courriel-confirm">Courriel confirm
+                            <span class="required">(required)</span>
+                        </label>
+                        <input type="text" id="courriel-confirm" value="" data-validate="!empty field" data-message-field="Confirmation email does not match." data-message-empty="The email is required." data-compare-field="#courriel" data-message-email="The email has to be valid.">
+                    </div>
                     <div class="field postal-code">
                         <label for="postalCode">Postal code
                             <span class="required">(required)</span>
