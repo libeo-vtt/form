@@ -5,21 +5,21 @@
     var Form = function(element, options) {
         this.form = $(element);
 
-        // Default module configuration
-        this.defaults = {
+        this.config = $.extend({
             modifiers: {
                 '!': 'not'
-            }
-        };
+            },
+            customGlobalClasses: {}
+        }, options || {});
 
-        // Merge default classes with window.project.classes
-        this.classes = $.extend(true, this.defaults.classes, (window.project ? window.project.classes : {}));
-
-        // Merge default labels with window.project.labels
-        this.labels = $.extend(true, this.defaults.labels, (window.project ? window.project.labels : {}));
-
-        // Merge default config with custom config
-        this.config = $.extend(true, this.defaults, options || {});
+        this.classes = $.extend({
+            active: 'is-active',
+            open: 'is-open',
+            hover: 'is-hover',
+            clicked: 'is-clicked',
+            extern: 'is-external',
+            error: 'is-error'
+        }, this.config.customGlobalClasses || {});
 
         this.errors = [];
         this.init();
@@ -85,13 +85,21 @@
                     if (!this.isNumber(value) && this.isNumber(compare)) {
                         value = value.length;
                     }
-                    if (term === 'regex') {
-                        var regex = new RegExp(compare);
-                        valid = regex.test(value);
-                    } else if (modifier !== false) {
-                        valid = is[modifier][term](value, compare) ? valid : false;
+                    if (term === 'field') {
+                        $comparingField = $(compare);
+                        $input = $(input);
+                        if($input.val() != $comparingField.val()) {
+                            valid = false;
+                        }
                     } else {
-                        valid = is[term](value, compare) ? valid : false;
+                        if (term === 'regex') {
+                            var regex = new RegExp(compare);
+                            valid = regex.test(value);
+                        } else if (modifier !== false) {
+                            valid = is[modifier][term](value, compare) ? valid : false;
+                        } else {
+                            valid = is[term](value, compare) ? valid : false;
+                        }
                     }
                     if (!valid && term === 'empty') {
                         empty = true;
