@@ -6,6 +6,7 @@
         this.form = $(element);
 
         this.config = $.extend({
+            focusTopSubmit: false,
             modifiers: {
                 '!': 'not'
             },
@@ -88,7 +89,7 @@
                     if (term === 'field') {
                         $comparingField = $(compare);
                         $input = $(input);
-                        if($input.val() != $comparingField.val()) {
+                        if ($input.val() != $comparingField.val()) {
                             valid = false;
                         }
                     } else {
@@ -232,6 +233,15 @@
                 _.each(this.errors, $.proxy(function(error) {
                     this.form.errorsList.append('<li>' + error + '</li>');
                 }, this));
+                // Focus on errors field
+                if (this.config.focusTopSubmit === true) {
+                    var errorDiv = this.form.find('.errors');
+                    errorDiv.attr('tabindex', -1);
+                    setTimeout($.proxy(function() {
+                        errorDiv.focus();
+                    }, this), 0);
+                }
+                // Bind errors events
                 this.bindErrorsEvents();
             }
         },
