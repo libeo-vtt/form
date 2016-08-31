@@ -6,7 +6,7 @@
         this.form = $(element);
 
         this.config = $.extend({
-            focusTopSubmit: false,
+            focusTopSubmit: true,
             modifiers: {
                 '!': 'not'
             },
@@ -41,6 +41,9 @@
                 this.displayErrors();
                 if (this.errors.length > 0) {
                     e.preventDefault();
+                    this.form.trigger('submitErrors');
+                } else {
+                    this.form.trigger('submitSuccess');
                 }
             }, this));
         },
@@ -76,6 +79,8 @@
             var value = this.isNumber(data) ? parseInt(data) : data;
             var validationTerms = this.getValidationTerms(input);
             var empty = false;
+            var $comparingField;
+            var $input;
 
             if (validationTerms) {
                 _.each(validationTerms, $.proxy(function(validationTerm) {
@@ -117,7 +122,6 @@
         validateFieldset: function(fieldset) {
             var inputs = $(fieldset).find('input'),
                 validationTerms = this.getValidationTerms(fieldset),
-                label = $(fieldset).find('legend'),
                 checkedElements = [],
                 empty = false;
 
