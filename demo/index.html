@@ -14,13 +14,13 @@
                         <label for="prenom">Name
                             <span class="required">(required)</span>
                         </label>
-                        <input type="text" id="prenom" value="" data-validate="!empty" data-message-empty="The name is required.">
+                        <input type="text" id="prenom" value="" data-validate="!empty" data-message-empty="The name is required." class="is-validate">
                     </div>
                     <div class="field email">
                         <label for="courriel">Courriel
                             <span class="required">(required)</span>
                         </label>
-                        <input type="text" id="courriel" value="" data-validate="!empty email" data-message-empty="The email is required." data-message-email="The email has to be valid.">
+                        <input type="text" id="courriel" value="" data-validate="!empty email" data-message-empty="The email is required." data-message-email="The email has to be valid." class="is-validate">
                     </div>
                     <div class="field email">
                         <label for="courriel-confirm">Courriel confirm
@@ -44,6 +44,8 @@
         <script type="text/javascript" src="../dist/jquery.form.js"></script>
         <script>
         $('.validate-form').form({
+            isValidateClassOnly: false,
+            validateClass: 'is-validate',
             focusTopSubmit: true
         });
         </script>
