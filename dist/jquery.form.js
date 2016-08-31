@@ -7,7 +7,6 @@
 
         this.config = $.extend({
             focusTopSubmit: false,
-            validateClass: 'is-validate',
             modifiers: {
                 '!': 'not'
             },
@@ -103,15 +102,12 @@
                             valid = is[term](value, compare) ? valid : false;
                         }
                     }
-                    // If input has validate class, then validate and display errors
-                    if ($(input).hasClass(this.config.validateClass) === true) {
-                        if (!valid && term === 'empty') {
-                            empty = true;
-                            this.newError(input, this.getErrorMessage(input, term));
-                        }
-                        if (!valid && !empty) {
-                            this.newError(input, this.getErrorMessage(input, term));
-                        }
+                    if (!valid && term === 'empty') {
+                        empty = true;
+                        this.newError(input, this.getErrorMessage(input, term));
+                    }
+                    if (!valid && !empty) {
+                        this.newError(input, this.getErrorMessage(input, term));
                     }
                 }, this));
             }
