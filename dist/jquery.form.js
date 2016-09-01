@@ -29,7 +29,7 @@
                 this.newError(input, message);
                 this.displayErrors();
             }, this),
-            resetErrors: $.proxy(function(input, message) {
+            resetErrors: $.proxy(function() {
                 this.resetErrors();
             }, this)
         };
