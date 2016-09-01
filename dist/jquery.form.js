@@ -23,6 +23,17 @@
         }, this.config.customGlobalClasses || {});
 
         this.errors = [];
+
+        this.publicMethods = {
+            newError: $.proxy(function(input, message) {
+                this.newError(input, message);
+                this.displayErrors();
+            }, this),
+            resetErrors: $.proxy(function(input, message) {
+                this.resetErrors();
+            }, this)
+        };
+
         this.init();
     };
 
@@ -191,6 +202,7 @@
 
         // Reset form errors
         resetErrors: function() {
+            $('.errors').html('');
             this.form.find('.field').removeClass(this.classes.error);
             this.form.find('.error-message, .error-message-explanation').remove();
         },
@@ -257,18 +269,26 @@
         }
     });
 
+
     $.fn.form = function(options) {
-        return this.each(function() {
-            var element = $(this);
+        this.each($.proxy(function(index, element) {
+            var $element = $(element);
 
-            // Return early if this element already has a plugin instance
-            if (element.data('form')) return;
+            // Return early if this $element already has a plugin instance
+            if ($element.data('form')) return;
 
-            // pass options to plugin constructor
-            var form = new Form(this, options);
+            // Pass options to plugin constructor
+            var form = new Form(element, options);
 
-            // Store plugin object in this element's data
-            element.data('form', form);
-        });
+            // Add every public methods to plugin
+            for (var key in form.publicMethods) {
+                this[key] = form.publicMethods[key];
+            }
+
+            // Store plugin object in this $element's data
+            $element.data('form', form);
+        }, this));
+
+        return this;
     };
 })(jQuery);
