@@ -172,7 +172,7 @@
 
         // Get validation terms
         getValidationTerms: function(input) {
-            var data = $(input).data('validate');
+            var data = $(input).attr('data-validate');
             return data !== undefined ? data.trim().split(' ') : false;
         },
 
