@@ -131,13 +131,22 @@
 
         // Validate current fieldset (for radio button and checkboxes)
         validateFieldset: function(fieldset) {
-            var inputs = $(fieldset).find('input'),
-                validationTerms = this.getValidationTerms(fieldset),
-                checkedElements = [],
-                empty = false;
+            var inputs = $(fieldset).find('input');
+            var validationTerms = this.getValidationTerms(fieldset);
+            var checkedElements = [];
+            var empty = false;
+            var isRanges = false;
 
             inputs.each(function(index, el) {
-                if ($(el).is(':checked')) checkedElements.push(el);
+                if ($(el).is(':checked')) {
+                    checkedElements.push(el);
+                } else {
+                    // Handle ranges input
+                    if ($(el).val() != 0) {
+                        checkedElements.push(el);
+                        isRanges = true;
+                    }
+                }
             });
 
             if (validationTerms) {
@@ -149,6 +158,10 @@
                     if (term === 'empty') {
                         if (modifier !== false) {
                             valid = is[modifier][term](checkedElements, compare) ? valid : false;
+                            // If ranges checked for all empty
+                            if(isRanges === true && checkedElements.length !== inputs.length ) {
+                                valid = false;
+                            }
                         } else {
                             valid = is[term](checkedElements, compare) ? valid : false;
                         }

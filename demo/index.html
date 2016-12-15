@@ -34,6 +34,21 @@
                         </label>
                         <input type="text" id="postalCode" value="" data-validate="!empty caPostalCode" data-message-capostalcode="The postal code has to be valid." data-message-empty="The postal code is required.">
                     </div>
+                    <fieldset data-validate="!empty" data-message-empty="The ranges are required.">
+                        <legend>Ranges</legend>
+                        <div class="field range">
+                            <label for="range1">Range 1
+                                <span class="required">(required)</span>
+                            </label>
+                            <input value="0" min="0" max="10" type="range" id="range1" value="">
+                        </div>
+                        <div class="field range">
+                            <label for="range1">Range 2
+                                <span class="required">(required)</span>
+                            </label>
+                            <input value="0" min="0" max="10" type="range" id="range2" value="" data-validate="!empty">
+                        </div>
+                    </fieldset>
                 </div>
             </div>
             <input type="submit" value="Submit">
@@ -44,7 +59,7 @@
         <script type="text/javascript" src="../dist/jquery.form.js"></script>
         <script>
         var $form = $('.validate-form').form({
-            focusTopSubmit: true
+        focusTopSubmit: true
         });
         </script>
     </body>
