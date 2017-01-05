@@ -14,7 +14,7 @@
                         <label for="prenom">Name
                             <span class="required">(required)</span>
                         </label>
-                        <input type="text" id="prenom" value="" data-validate="!empty" data-message-empty="The name is required.">
+                        <input type="text" id="prenom" value="" data-validate="!empty checkname" data-message-empty="The name is required." data-message-checkname="The name is already used.">
                     </div>
                     <div class="field email">
                         <label for="courriel">Courriel
@@ -59,7 +59,22 @@
         <script type="text/javascript" src="../dist/jquery.form.js"></script>
         <script>
         var $form = $('.validate-form').form({
-        focusTopSubmit: true
+            focusTopSubmit: true,
+            customFunctions: {
+                'checkname': function(value, compare){
+                    var namesText = $.ajax({
+                        type: 'GET',
+                        dataType: 'text',
+                        url: 'names.json',
+                        async: false
+                    }).responseText;
+                    var names = JSON.parse(namesText);
+                    if(names.indexOf(value.toLowerCase()) != -1) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
         });
         </script>
     </body>
