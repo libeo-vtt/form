@@ -10,7 +10,8 @@
             modifiers: {
                 '!': 'not'
             },
-            customGlobalClasses: {}
+            customGlobalClasses: {},
+            customFunctions: {}
         }, options || {});
 
         this.classes = $.extend({
@@ -112,10 +113,14 @@
                         if (term === 'regex') {
                             var regex = new RegExp(compare);
                             valid = regex.test(value);
-                        } else if (modifier !== false) {
+                        } else if (modifier !== false && is[modifier][term]) {
                             valid = is[modifier][term](value, compare) ? valid : false;
-                        } else {
+                        } else if (is[term]) {
                             valid = is[term](value, compare) ? valid : false;
+                        } else if (this.config.customFunctions[term]){
+                            valid = this.config.customFunctions[term](value, compare) ? (modifier != 'not' ? true : false ) : (modifier != 'not' ? false : true );
+                        } else {
+                            console.warn('Form comparison function'+(modifier?' '+modifier:'')+' '+term+' does not exists.');
                         }
                     }
                     if (!valid && term === 'empty') {
@@ -159,24 +164,28 @@
                         modifier = this.getModifier(validationTerm),
                         compare = this.getCompare(fieldset, term);
                     if (term === 'empty') {
-                        if (modifier !== false) {
+                        if (modifier !== false && is[modifier][term]) {
                             valid = is[modifier][term](checkedElements, compare) ? valid : false;
                             // If ranges checked for all empty
                             if (isRanges === true && checkedElements.length !== inputs.length) {
                                 valid = false;
                             }
-                        } else {
+                        } else if(is[term]) {
                             valid = is[term](checkedElements, compare) ? valid : false;
+                        } else {
+                            console.warn('Form comparison function'+(modifier?' '+modifier:'')+' '+term+' does not exists.');
                         }
                         if (!valid) {
                             empty = true;
                             this.newFieldsetError(fieldset, this.getErrorMessage(fieldset, term));
                         }
                     } else {
-                        if (modifier !== false) {
+                        if (modifier !== false && is[modifier][term]) {
                             valid = is[modifier][term](checkedElements.length, compare) ? valid : false;
-                        } else {
+                        } else if (is[term]) {
                             valid = is[term](checkedElements.length, compare) ? valid : false;
+                        } else {
+                            console.warn('Form comparison function'+(modifier?' '+modifier:'')+' '+term+' does not exists.');
                         }
                         if (!valid && !empty) {
                             this.newFieldsetError(fieldset, this.getErrorMessage(fieldset, term));
