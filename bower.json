@@ -6,7 +6,7 @@
     "libeo <info@libeo.com>"
   ],
   "description": "A form validation plugin using is.js",
-  "main": "dist/jquery.form.js",
+  "main": "dist/jquery.customFormValidation.js",
   "private": true,
   "ignore": [
     "node_modules"
