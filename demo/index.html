@@ -56,13 +56,13 @@
         <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
         <script type="text/javascript" src="../bower_components/is_js/is.js"></script>
-        <script type="text/javascript" src="../dist/jquery.form.js"></script>
+        <script type="text/javascript" src="../dist/jquery.customFormValidation.js"></script>
         <script>
-        var $form = $('.validate-form').form({
+        var $form = $('.validate-form').customFormValidation({
             focusTopSubmit: true,
             customFunctions: {
                 'checkname': function(value, compare){
-                    var namesText = $.ajax({
+                    /*var namesText = $.ajax({
                         type: 'GET',
                         dataType: 'text',
                         url: 'names.json',
@@ -71,7 +71,7 @@
                     var names = JSON.parse(namesText);
                     if(names.indexOf(value.toLowerCase()) != -1) {
                         return false;
-                    }
+                    }*/
                     return true;
                 }
             }

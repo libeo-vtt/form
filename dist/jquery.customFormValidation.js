@@ -2,8 +2,8 @@
 // A form validation plugin using is.js
 
 (function($) {
-    var Form = function(element, options) {
-        this.form = $(element);
+    var CustomFormValidation = function(element, options) {
+        this.customFormValidation = $(element);
 
         this.config = $.extend({
             focusTopSubmit: true,
@@ -38,7 +38,7 @@
         this.init();
     };
 
-    $.extend(Form.prototype, {
+    $.extend(CustomFormValidation.prototype, {
 
         // Component initialization
         init: function() {
@@ -47,15 +47,15 @@
 
         // Bind events with actions
         bindEvents: function() {
-            this.form.on('submit', $.proxy(function(e) {
+            this.customFormValidation.on('submit', $.proxy(function(e) {
                 this.resetErrors();
                 this.validate();
                 this.displayErrors();
                 if (this.errors.length > 0) {
                     e.preventDefault();
-                    this.form.trigger('submitErrors');
+                    this.customFormValidation.trigger('submitErrors');
                 } else {
-                    this.form.trigger('submitSuccess');
+                    this.customFormValidation.trigger('submitSuccess');
                 }
             }, this));
         },
@@ -63,9 +63,9 @@
         // Bind errors events with actions
         bindErrorsEvents: function() {
             // Scroll and focus input on error click
-            this.form.find('.errors a').on('click', $.proxy(function(e) {
-                var label = this.form.find(e.currentTarget.hash).parents('.field').find('label'),
-                    input = this.form.find(e.currentTarget.hash);
+            this.customFormValidation.find('.errors a').on('click', $.proxy(function(e) {
+                var label = this.customFormValidation.find(e.currentTarget.hash).parents('.field').find('label'),
+                    input = this.customFormValidation.find(e.currentTarget.hash);
                 input.focus();
                 $(window).scrollTop(label.offset().top);
                 e.preventDefault();
@@ -74,7 +74,7 @@
 
         // Catch form submit and validate values
         validate: function() {
-            var inputs = this.form.find('input, textarea, select, fieldset');
+            var inputs = this.customFormValidation.find('input, textarea, select, fieldset');
             this.errors = [];
             inputs.each($.proxy(function(index, input) {
                 if (input.tagName.toLowerCase() === 'fieldset') {
@@ -228,20 +228,20 @@
         // Reset form errors
         resetErrors: function() {
             $('.errors').html('');
-            this.form.find('.field').removeClass(this.classes.error);
-            this.form.find('.error-message, .error-message-explanation').remove();
+            this.customFormValidation.find('.field').removeClass(this.classes.error);
+            this.customFormValidation.find('.error-message, .error-message-explanation').remove();
         },
 
         // Throw new input error
         newError: function(input, message) {
             var id = $(input).attr('id'),
-                label = this.form.find('label[for="' + id + '"]'),
+                label = this.customFormValidation.find('label[for="' + id + '"]'),
                 field = label.parents('.field').eq(0),
                 markup = '<a href="#' + id + '">' + message + '</a>';
 
             field.addClass(this.classes.error);
             if (label.find('.error-message').length === 0) {
-                label.prepend('<span class="error-message">' + this.form.data('errors-prefix') + '</span>');
+                label.prepend('<span class="error-message">' + this.customFormValidation.data('errors-prefix') + '</span>');
             }
             label.append('<span class="error-message-explanation"><span>' + message + '</span></span>');
             this.errors.push(markup);
@@ -256,7 +256,7 @@
 
             $fieldset.addClass(this.classes.error);
             if (legend.find('.error-message').length === 0) {
-                legend.prepend('<span class="error-message">' + this.form.data('errors-prefix') + '</span>');
+                legend.prepend('<span class="error-message">' + this.customFormValidation.data('errors-prefix') + '</span>');
             }
             legend.append('<span class="error-message-explanation"><span>' + message + '</span></span>');
             this.errors.push(markup);
@@ -264,19 +264,19 @@
 
         // Display errors summary
         displayErrors: function() {
-            this.form.find('.errors').remove();
+            this.customFormValidation.find('.errors').remove();
             if (this.errors.length > 0) {
-                this.form.prepend('<div class="errors"></div>');
-                this.form.errors = this.form.find('> .errors');
-                this.form.errors.append('<p>' + this.form.data('errors-message').replace('{n}', this.errors.length).replace('{s}', this.errors.length > 1 ? 's' : '') + '</p>');
-                this.form.errors.append('<ul></ul>');
-                this.form.errorsList = this.form.find('> .errors > ul');
+                this.customFormValidation.prepend('<div class="errors"></div>');
+                this.customFormValidation.errors = this.customFormValidation.find('> .errors');
+                this.customFormValidation.errors.append('<p>' + this.customFormValidation.data('errors-message').replace('{n}', this.errors.length).replace('{s}', this.errors.length > 1 ? 's' : '') + '</p>');
+                this.customFormValidation.errors.append('<ul></ul>');
+                this.customFormValidation.errorsList = this.customFormValidation.find('> .errors > ul');
                 _.each(this.errors, $.proxy(function(error) {
-                    this.form.errorsList.append('<li>' + error + '</li>');
+                    this.customFormValidation.errorsList.append('<li>' + error + '</li>');
                 }, this));
                 // Focus on errors field
                 if (this.config.focusTopSubmit === true) {
-                    var errorDiv = this.form.find('.errors');
+                    var errorDiv = this.customFormValidation.find('.errors');
                     errorDiv.attr('tabindex', -1);
                     setTimeout($.proxy(function() {
                         errorDiv.focus();
@@ -295,23 +295,23 @@
     });
 
 
-    $.fn.form = function(options) {
+    $.fn.customFormValidation = function(options) {
         this.each($.proxy(function(index, element) {
             var $element = $(element);
 
             // Return early if this $element already has a plugin instance
-            if ($element.data('form')) return;
+            if ($element.data('custom-form-validation')) return;
 
             // Pass options to plugin constructor
-            var form = new Form(element, options);
+            var customFormValidation = new CustomFormValidation(element, options);
 
             // Add every public methods to plugin
-            for (var key in form.publicMethods) {
-                this[key] = form.publicMethods[key];
+            for (var key in customFormValidation.publicMethods) {
+                this[key] = customFormValidation.publicMethods[key];
             }
 
             // Store plugin object in this $element's data
-            $element.data('form', form);
+            $element.data('custom-form-validation', customFormValidation);
         }, this));
 
         return this;
