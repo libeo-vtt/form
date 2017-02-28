@@ -14,7 +14,7 @@ A form validation plugin using is.js
 2. Include plugin's code:
 
 	```html
-	<script src="path/to/jquery.form.js"></script>
+	<script src="path/to/jquery.customFormValidation.js"></script>
 	```
 
 3. Call the plugin:
@@ -27,8 +27,8 @@ A form validation plugin using is.js
 
 ## Downloads
 
-* [Source](https://raw.githubusercontent.com/libeo-vtt/jquery-form/master/dist/jquery.form.js)
-* [Minified version](https://raw.githubusercontent.com/libeo-vtt/jquery-form/master/dist/jquery.form.min.js)
+* [Source](https://raw.githubusercontent.com/libeo-vtt/jquery-form/master/dist/jquery.customFormValidation.js)
+* [Minified version](https://raw.githubusercontent.com/libeo-vtt/jquery-form/master/dist/jquery.customFormValidation.min.js)
 
 ## History
 
