@@ -20,7 +20,7 @@ A form validation plugin using is.js
 3. Call the plugin:
 
 	```javascript
-	$('form').form({
+	$('form').customFormValidation({
 		// config
 	});
 	```
